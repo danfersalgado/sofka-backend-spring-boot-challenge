@@ -1,0 +1,3 @@
+rootProject.name = 'springboot-ms'
+include 'client-service'
+include 'account-service'

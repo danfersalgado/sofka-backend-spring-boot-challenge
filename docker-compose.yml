@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  db-client:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: client_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+
+  db-account:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: account_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5434:5432"
+
+  client-service:
+    build: ./client-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db-client
+      - rabbitmq
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-client:5432/client_db
+      SPRING_RABBITMQ_HOST: rabbitmq
+
+  account-service:
+    build: ./account-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db-account
+      - rabbitmq
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-account:5432/account_db
+      SPRING_RABBITMQ_HOST: rabbitmq
