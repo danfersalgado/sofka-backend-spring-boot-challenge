@@ -1,35 +1,36 @@
 {
 	"info": {
-		"_postman_id": "8f3e5b6a-4d2c-4b3a-9e1f-7c6d5b4a3a2a",
-		"name": "Sofka Microservices",
-		"description": "Collection for technical exercise validation (Senior Profile)",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "f962d2f2-4399-4c59-84c9-e69bd8191138",
+		"name": "Sofka Technical Challenge",
+		"description": "Colección completa para los microservicios de Clientes y Cuentas con Arquitectura Hexagonal.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1847976"
 	},
 	"item": [
 		{
-			"name": "Client Service",
+			"name": "1. Clientes (Puerto 8082)",
 			"item": [
 				{
-					"name": "Create Client",
+					"name": "Crear Cliente (Jose Lema)",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"Jose Lema\",\n    \"genero\": \"Masculino\",\n    \"edad\": 30,\n    \"identificacion\": \"1234567890\",\n    \"direccion\": \"Otavalo sn y principal\",\n    \"telefono\": \"098254785\",\n    \"clienteid\": \"jose_lema\",\n    \"contrasena\": \"1234\",\n    \"estado\": true\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"nombre\": \"Jose Lema\",\n    \"genero\": \"Masculino\",\n    \"edad\": 30,\n    \"identificacion\": \"1234567890\",\n    \"direccion\": \"Otavalo sn y principal\",\n    \"telefono\": \"098254785\",\n    \"clienteId\": \"JOSEL\",\n    \"contrasena\": \"1234\",\n    \"estado\": true\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/clientes",
+							"raw": "http://localhost:8082/api/clientes",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"api",
 								"clientes"
@@ -39,76 +40,118 @@
 					"response": []
 				},
 				{
-					"name": "Get All Clients",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "http://localhost:8080/api/clientes"
-					}
-				}
-			]
-		},
-		{
-			"name": "Account Service",
-			"item": [
-				{
-					"name": "Create Account",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"tipoCuenta\": \"Ahorros\",\n    \"saldoInicial\": 2000,\n    \"estado\": true,\n    \"clientId\": \"jose_lema\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "http://localhost:8081/api/cuentas"
-					}
-				},
-				{
-					"name": "Register Deposit",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"valor\": 100\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "http://localhost:8081/api/movimientos"
-					}
-				},
-				{
-					"name": "Register Withdrawal (Fail - No balance)",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"valor\": -5000\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "http://localhost:8081/api/movimientos"
-					}
-				},
-				{
-					"name": "Get Report",
+					"name": "Listar Todos los Clientes",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/api/reportes?clientId=jose_lema&fechaInicio=2024-01-01&fechaFin=2024-12-31",
+							"raw": "http://localhost:8082/api/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Cliente por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/clientes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Cliente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Jose Lema Actualizado\",\n    \"genero\": \"Masculino\",\n    \"edad\": 31,\n    \"identificacion\": \"1234567890\",\n    \"direccion\": \"Quito\",\n    \"telefono\": \"099999999\",\n    \"clienteId\": \"JOSEL\",\n    \"contrasena\": \"4321\",\n    \"estado\": true\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/clientes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/clientes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Cuentas (Puerto 8081)",
+			"item": [
+				{
+					"name": "Crear Cuenta Ahorros",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"tipoCuenta\": \"Ahorros\",\n    \"saldoInicial\": 2000,\n    \"estado\": true,\n    \"clientId\": \"JOSEL\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/cuentas",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -116,24 +159,230 @@
 							"port": "8081",
 							"path": [
 								"api",
-								"reportes"
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Todas las Cuentas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/cuentas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Cuenta por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/cuentas/478758",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"cuentas",
+								"478758"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Cuenta",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipoCuenta\": \"Corriente\",\n    \"saldoInicial\": 3000,\n    \"estado\": true,\n    \"clientId\": \"JOSEL\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/cuentas/478758",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"cuentas",
+								"478758"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Cuenta",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/cuentas/478758",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"cuentas",
+								"478758"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Movimientos (Puerto 8081)",
+			"item": [
+				{
+					"name": "Registrar Depósito (Success)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"valor\": 100\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/movimientos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"movimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Retiro (Success)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"valor\": -575\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/movimientos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"movimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Retiro (Fail - Saldo Insuficiente)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCuenta\": \"478758\",\n    \"valor\": -5000\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/movimientos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"movimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Reporte de Movimientos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/movimientos/reporte?numeroCuenta=478758&inicio=2024-01-01T00:00:00&fin=2026-12-31T23:59:59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"movimientos",
+								"reporte"
 							],
 							"query": [
 								{
-									"key": "clientId",
-									"value": "jose_lema"
+									"key": "numeroCuenta",
+									"value": "478758"
 								},
 								{
-									"key": "fechaInicio",
-									"value": "2024-01-01"
+									"key": "inicio",
+									"value": "2024-01-01T00:00:00"
 								},
 								{
-									"key": "fechaFin",
-									"value": "2024-12-31"
+									"key": "fin",
+									"value": "2026-12-31T23:59:59"
 								}
 							]
 						}
-					}
+					},
+					"response": []
 				}
 			]
 		}
